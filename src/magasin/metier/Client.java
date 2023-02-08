@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * classe client du magasin
+ */
 public class Client {
 
     protected int idclient;
