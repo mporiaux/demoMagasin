@@ -6,9 +6,15 @@ import java.util.Objects;
 
 /**
  * classe client du magasin
+ *   @author Michel Poriaux
+ *   @version 1.0
+ *   @see ComFact
  */
 public class Client {
 
+    /**
+     * identifiant unique du client
+     */
     protected int idclient;
     /**
      * nom du client
@@ -237,6 +243,11 @@ public class Client {
         this.comFacts = comFacts;
     }
 
+    /**
+     * égalité de deux clients  basée sur le triplet nom,prénom,téléphone
+     * @param o autre élément
+     * @return égalité ou pas
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -245,6 +256,10 @@ public class Client {
         return nom.equals(client.nom) && prenom.equals(client.prenom) && tel.equals(client.tel);
     }
 
+    /**
+     * calcul du hashcode du client basé sur le triplet nom,prénom,téléphone
+     * @return valeur du hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(nom, prenom, tel);

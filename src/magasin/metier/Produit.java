@@ -139,7 +139,10 @@ public class Produit {
         return numprod;
     }
 
-
+    /**
+     * affichage des infos du produit
+     * @return description complète du produit
+     */
     @Override
     public String toString() {
         return "Produit{" +
@@ -152,23 +155,31 @@ public class Produit {
                 '}';
     }
 
+
+
     /**
-     * affichage des infos du produit
-     * @return description complète du produit
-    */
-
-
+     * déterminer si le stock actuel est suffisant
+     * @return stock suffisant ou pas
+     */
 
     public boolean stockSuffisant(){
         return stock>=stockMin;
     }
 
+    /**
+     * calcul de la quantité à commander pour atteindre le stock maximum
+     * @return quantité à recommander ou zéro si le stock actuel dépasse le stock max
+     */
     public int quantiteACommander(){
         int stockMax = (int)(stockMin*1.5);
         if (stockMax>stock) return stockMax-stock;
         else return 0;
       }
 
+    /**
+     * ajout d'une quantité en stock
+     * @param q quantité supplémentaire
+     */
     public void reapprovisionner(int q){
         stock+=q;
     }
@@ -179,10 +190,19 @@ public class Produit {
         return true;
     }
 
+    /**
+     * calcul de la valeur en stock du produit basée sur phtva*stock
+     * @return valeur en stock
+     */
     public BigDecimal valeurStock(){
        return phtva.multiply(new BigDecimal(stock));
     }
 
+    /**
+     * égalité de deux produits basée sur le numéro de produit
+     * @param o autre produit
+     * @return égalité ou pas
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,6 +211,10 @@ public class Produit {
         return numprod.equals(produit.numprod);
     }
 
+    /**
+     * calcul du hashcode du produit basé sur le numéro de produit
+     * @return hashcode du produit
+     */
     @Override
     public int hashCode() {
         return Objects.hash(numprod);

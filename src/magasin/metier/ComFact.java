@@ -244,7 +244,11 @@ public class ComFact {
     public void setLignes(List<Ligne> lignes) {
         this.lignes = lignes;
     }
-
+    /**
+     * méthode toString
+     *
+     * @return informations complètes
+     */
     @Override
     public String toString() {
         return "ComFact{" +
@@ -259,13 +263,11 @@ public class ComFact {
                 '}';
     }
 
+
     /**
-     * méthode toString
-     *
-     * @return informations complètes
+     * calcul du hashcode basé sur l'idcommande
+     * @return hashcode de la commande
      */
-
-
     @Override
     public int hashCode() {
         int hash = 3;
@@ -273,6 +275,11 @@ public class ComFact {
         return hash;
     }
 
+    /**
+     * test d'égalité base sur l'idcommande
+     * @param obj autre commande
+     * @return égalité ou pas
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
