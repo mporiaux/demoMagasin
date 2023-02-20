@@ -4,12 +4,11 @@ import java.sql.*;
 public class SQL01Oracle {
 
     public static void main(String args[]) {
-        String userid = "ora2";
-        String password = "condorcet";
-        //String server = "mons-oracle12.condorcet.be";
-        String server = "localhost";
+        String userid = "ora";
+        String password = "";
+        String server = "mons-oracle19.condorcet.be";
         String port = "1521";
-        String database = "xe";//"orcl"
+        String database = "orcl.condorcet.be";
         String url = "jdbc:oracle:thin:@//" + server + ":" + port + "/" + database;//construit l'URL de la base de données
         Connection dbConnect=null;
 
