@@ -18,11 +18,11 @@ public class SQL03 {
         String nomrech = sc.nextLine();
         System.out.println("prenom du client recheche : ");
         String pnomrech = sc.nextLine();
-
+        String query="SELECT *  FROM APICLIENT WHERE NOM = '"+ nomrech + "' AND PRENOM = '" + pnomrech + "'";
+        System.out.println(query);
         try (Statement stmt = dbConnect.createStatement();
-             ResultSet rs = stmt.executeQuery(
-                        "SELECT *  FROM APICLIENT WHERE NOM = '"
-                        + nomrech + "' AND PRENOM = '" + pnomrech + "'");) {
+             ResultSet rs = stmt.executeQuery(query);
+                        ) {
             boolean trouve = false;
             while (rs.next()) {
                 trouve = true;

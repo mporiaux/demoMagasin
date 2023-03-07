@@ -59,7 +59,7 @@ public class Produit {
         this.numprod = numprod;
         this.description = description;
         this.phtva = phtva;
-        phtva.setScale(2,RoundingMode.HALF_UP);
+        if(phtva !=null)phtva.setScale(2,RoundingMode.HALF_UP);
         this.stock = stock;
         this.stockMin=stockMin;
     }

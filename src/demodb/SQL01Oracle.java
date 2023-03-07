@@ -4,8 +4,8 @@ import java.sql.*;
 public class SQL01Oracle {
 
     public static void main(String args[]) {
-        String userid = "orann";
-        String password = "pwd";
+        String userid = "ora5";
+        String password = "oracle";
         String server = "mons-oracle19.condorcet.be";
         String port = "1521";
         String database = "orcl.condorcet.be";
