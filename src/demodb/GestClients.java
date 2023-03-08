@@ -182,7 +182,8 @@ public class GestClients {
                 String rue= rs.getString(6);
                 String num = rs.getString(7);
                 String tel = rs.getString(8);
-                System.out.printf("%d %s %s %d %s %s %s %s\n",idclient,nom,prenom,cp,loc,rue,num,tel);
+                Client cl = new Client(idclient,nom,prenom,cp,loc,rue,num,tel);
+                System.out.println(cl);
             }
 
         } catch (SQLException e) {
