@@ -117,5 +117,15 @@ public class ClientViewGraph extends JFrame implements ActionListener, ClientVie
     public void affMsg(String msg){
         JOptionPane.showInputDialog(null, "information,", msg);
     }
+
+    @Override
+    public void affList(List infos) {
+
+    }
+
+    @Override
+    public Client selectionner(List<Client> lc) {
+        return null;
+    }
 }
 
