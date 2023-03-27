@@ -8,10 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,11 +69,13 @@ order by apiclient.idclient
                         BigDecimal montant = rs.getBigDecimal(11);
                         char etat = rs.getString(12).charAt(0);
                         LocalDate dateCom = rs.getDate(13).toLocalDate();
-                        LocalDate dateFact = rs.getDate(14).toLocalDate();
-                        LocalDate datePay = rs.getDate(15).toLocalDate();
+                        Date date = rs.getDate(14);
+                        LocalDate datefact = date!=null?date.toLocalDate():null;
+                        date =rs.getDate(15);
+                        LocalDate datepay = date!=null?date.toLocalDate():null;
                         ComFact cf = new ComFact(numcommande, numfact, dateCom, etat, montant, cl);
-                        cf.setDateFacturation(dateFact);
-                        cf.setDatePayement(datePay);
+                        cf.setDateFacturation(datefact);
+                        cf.setDatePayement(datepay);
                         lc.add(cf);
                     }while(rs.next());
                 }

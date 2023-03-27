@@ -66,6 +66,7 @@ public class ClientViewConsole implements ClientViewInterface {
         sc.skip("\n");
         if (nl >= 0) {
             Client client = lc.get(nl);
+            client=presenter.search(client.getIdclient());
             do {
                 System.out.println("1.commandes en cours\n2.factures non payees\n3.factures en retard\n4.factures payees\n5.produits achetés\n6.menu principal");
                 System.out.println("choix : ");

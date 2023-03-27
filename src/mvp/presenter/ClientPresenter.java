@@ -61,10 +61,11 @@ public class ClientPresenter {
         //view.setListDatas(model.getClients());//désactivé pour éviter appels imbriqués
     }
 
-    public void search(int idClient) {
+    public Client search(int idClient) {
         Client cl = model.readClient(idClient);
         if(cl==null) view.affMsg("recherche infructueuse");
         else view.affMsg(cl.toString());
+        return cl;
     }
 
     public void commandes(Client client) {
