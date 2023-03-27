@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ClientModelDB implements DAOClient,ClientSpecial{
     private static final Logger logger = LogManager.getLogger(ClientModelDB.class);
-    private Connection dbConnect;
+    protected Connection dbConnect;
 
     public ClientModelDB(){
         dbConnect = DBConnection.getConnection();

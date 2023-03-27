@@ -1,9 +1,6 @@
 package mvp;
 
-import mvp.model.ClientModelDB;
-import mvp.model.ComfactModelDB;
-import mvp.model.DAOClient;
-import mvp.model.DAOComfact;
+import mvp.model.*;
 import mvp.presenter.ClientPresenter;
 import mvp.presenter.ComfactPresenter;
 import mvp.view.ClientViewConsole;
@@ -26,6 +23,7 @@ public class GestMagasin {
 
     public void gestion(){
         cm = new ClientModelDB();
+        cm = new ClientModelHyb();
         cfm = new ComfactModelDB();
         cv = new ClientViewConsole();
         cfv = new ComfactViewConsole();

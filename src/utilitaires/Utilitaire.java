@@ -2,6 +2,7 @@ package utilitaires;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,5 +44,10 @@ public class Utilitaire {
         int m = Integer.parseInt(hms[1]);
         int s = Integer.parseInt(hms[2]);
         return LocalTime.of(h,m,s);
+    }
+
+    public static String getDateFrench(LocalDate d){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
+        return dtf.format(d);
     }
 }

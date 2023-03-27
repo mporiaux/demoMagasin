@@ -1,5 +1,6 @@
 package magasin.metier;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -283,8 +284,36 @@ public class Client {
         comFacts.remove(cf);
         cf.setClient(null);
     }
+    public List<ComFact>  factPayees() {
+        List<ComFact> lcf = new ArrayList<>();
+        for(ComFact cf : comFacts){
+            if(cf.getEtat()=='p') lcf.add(cf);
+        }
+        return lcf;
+    }
 
-    /**
+    public List<ComFact> factRetard() {
+        List<ComFact> lcf = new ArrayList<>();
+        for(ComFact cf : comFacts){
+            if(cf.getEtat()=='f' && cf.getDatePayement()==null && cf.getDateFacturation().plusDays(30).isBefore(LocalDate.now()))lcf.add(cf);
+        }
+       return lcf;
+    }
+
+
+    public List<ComFact> factNonPayees() {
+        List<ComFact> lcf = new ArrayList<>();
+        for (ComFact cf : comFacts) {
+            if (cf.getEtat() == 'f' && cf.getDatePayement() == null) lcf.add(cf);
+        }
+        return lcf;
+    }
+
+
+
+
+    /*
+  *
      * méthode toString
      *
      * @return informations complètes
