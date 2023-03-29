@@ -1,16 +1,18 @@
 package mvp.view;
 
-import magasin.metier.Client;
+
 import magasin.metier.ComFact;
-import mvp.presenter.ClientPresenter;
 import mvp.presenter.ComfactPresenter;
-import utilitaires.Utilitaire;
+import static utilitaires.Utilitaire.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static utilitaires.Utilitaire.choixListe;
 
 public class ComfactViewConsole implements ComfactViewInterface {
     private ComfactPresenter presenter;
@@ -31,7 +33,7 @@ public class ComfactViewConsole implements ComfactViewInterface {
     public void setListDatas(List<ComFact> comfacts) {
 
         this.lcf=comfacts;
-        Utilitaire.affListe(lcf);
+        affListe(lcf);
         menu();
     }
 
@@ -42,16 +44,13 @@ public class ComfactViewConsole implements ComfactViewInterface {
 
     @Override
     public void affList(List infos) {
-        Utilitaire.affListe(infos);
+        affListe(infos);
     }
 
 
     public void menu(){
         do{
-            System.out.println("1.ajout 2.retrait 3.rechercher 4.modifier 5.fin");
-
-            int ch = sc.nextInt();
-            sc.skip("\n");
+            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
             switch(ch){
                 case 1: ajouter();
                         break;
@@ -61,14 +60,28 @@ public class ComfactViewConsole implements ComfactViewInterface {
                     break;
                 case 4 : modifier();
                     break;
-                case 5 : return;
+                case 5: special();
+                    break;
+                case 6 : return;
             }
         }while(true);
     }
 
+    private void special() {
+        System.out.println("ajout d'une ligne");//seule opération démontrée ici
+        System.out.println("numéro de ligne : ");
+        int nl = sc.nextInt() - 1;
+        sc.skip("\n");
+        if (nl >= 0) {
+            ComFact cf = lcf.get(nl);
+            System.out.print("quantité :");
+            int q = sc.nextInt();
+            presenter.addLigne(cf, q);
+        }
+    }
 
     private void modifier() {
-        int nl = Utilitaire.choixElt(lcf);
+        int nl = choixElt(lcf);
             ComFact cf = lcf.get(nl-1);
             Integer numfact = Integer.parseInt(modifyIfNotBlank("numéro de facture ",cf.getNumfact()+""));
             String date = modifyIfNotBlank("date de facturation ",cf.getDateFacturation()+"");
@@ -82,7 +95,7 @@ public class ComfactViewConsole implements ComfactViewInterface {
             ncf.setDatePayement(datepay);
             presenter.update(ncf);
             lcf=presenter.getAll();//rafraichissement
-            Utilitaire.affListe(lcf);
+            affListe(lcf);
 
     }
 
@@ -93,24 +106,18 @@ public class ComfactViewConsole implements ComfactViewInterface {
     }
 
     private void retirer() {
-            int nl = Utilitaire.choixElt(lcf);
+            int nl = choixElt(lcf);
             ComFact cf = lcf.get(nl-1);
             presenter.removeComfact(cf);
         lcf=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lcf);
+        affListe(lcf);
     }
 
     private void ajouter() {
         presenter.addComfact();
         lcf=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lcf);
+        affListe(lcf);
     }
-    public String modifyIfNotBlank(String label,String oldValue){
-        System.out.println(label+" : "+oldValue);
-        System.out.print("nouvelle valeur (enter si pas de changement) : ");
-        String newValue= sc.nextLine();
-        if(newValue.isBlank()) return oldValue;
-        return newValue;
-    }
+
 }
 

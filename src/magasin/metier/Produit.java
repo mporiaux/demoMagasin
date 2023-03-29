@@ -64,9 +64,19 @@ public class Produit {
         this.stockMin=stockMin;
     }
 
+    public int getIdproduit() {
+        return idproduit;
+    }
 
+    public void setIdproduit(int idproduit) {
+        this.idproduit = idproduit;
+    }
 
- /**
+    public void setNumprod(String numprod) {
+        this.numprod = numprod;
+    }
+
+    /**
     * getter phtva
     * @return prix hors tva du produit
     */

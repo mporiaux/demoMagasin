@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ComfactModelDB implements DAOComfact{
+public class ComfactModelDB implements DAOComfact,ComfactSpecial{
     private static final Logger logger = LogManager.getLogger(ComfactModelDB.class);
     private Connection dbConnect;
 
@@ -172,6 +172,25 @@ public class ComfactModelDB implements DAOComfact{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        }
+    }
+
+    @Override
+    public boolean addProd(ComFact cf, Produit pr, int q) {
+        String query = "insert into  APILIGNE(idcommande,idproduit,quantite,prixachat) values(?,?,?,?)";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,cf.getIdcommande());
+            pstm.setInt(2,pr.getIdproduit());
+            pstm.setInt(3,q);
+            pstm.setBigDecimal(4,pr.getPhtva());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :" + e);
+            logger.error("erreur d'update : "+e);
+            return false;
         }
     }
 }

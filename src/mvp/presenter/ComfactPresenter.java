@@ -4,6 +4,7 @@ import magasin.metier.Client;
 import magasin.metier.ComFact;
 import magasin.metier.Produit;
 import mvp.model.ClientSpecial;
+import mvp.model.ComfactSpecial;
 import mvp.model.DAOClient;
 import mvp.model.DAOComfact;
 import mvp.view.ClientViewInterface;
@@ -17,6 +18,12 @@ public class ComfactPresenter {
     private DAOComfact model;
     private ComfactViewInterface view;
     private ClientPresenter clientPresenter;
+
+    private ProduitPresenter produitPresenter;
+
+    public void setProduitPresenter(ProduitPresenter produitPresenter) {
+        this.produitPresenter = produitPresenter;
+    }
 
     public void setClientPresenter(ClientPresenter clientPresenter) {
         this.clientPresenter = clientPresenter;
@@ -72,6 +79,13 @@ public class ComfactPresenter {
         ComFact cf  = model.readComfact(idCommande);
         if(cf==null) view.affMsg("recherche infructueuse");
         else view.affMsg(cf.toString());
+    }
+
+    public void addLigne(ComFact cf,int q){
+        Produit pr = produitPresenter.selectionner();
+       boolean ok =  ((ComfactSpecial)model).addProd(cf,pr,q);
+       if(ok) view.affMsg("produit ajouté");
+       else view.affMsg("erreur lors de l'ajout du produit");
     }
 
 }

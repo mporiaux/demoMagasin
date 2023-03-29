@@ -2,15 +2,18 @@ package mvp.view;
 
 import magasin.metier.Client;
 import mvp.presenter.ClientPresenter;
-import utilitaires.Utilitaire;
 
+import static utilitaires.Utilitaire.*;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class ClientViewConsole implements ClientViewInterface {
     private ClientPresenter presenter;
-    private List<Client>lc;
+    private List<Client> lc;
     private Scanner sc = new Scanner(System.in);
+
     public ClientViewConsole() {
 
     }
@@ -23,96 +26,99 @@ public class ClientViewConsole implements ClientViewInterface {
     @Override
     public void setListDatas(List<Client> clients) {
 
-        this.lc=clients;
-        Utilitaire.affListe(lc);
+        this.lc = clients;
+        affListe(lc);
         menu();
     }
 
     @Override
     public void affMsg(String msg) {
-        System.out.println("information:"+msg);
+        System.out.println("information:" + msg);
     }
 
     @Override
     public void affList(List infos) {
-        Utilitaire.affListe(infos);
+        affListe(infos);
     }
 
 
-    public void menu(){
-        do{
-            System.out.println("1.ajout 2.retrait 3.rechercher 4.modifier 5.special 6.fin");
+    public void menu() {
+        do {
 
-            int ch = sc.nextInt();
-            sc.skip("\n");
-            switch(ch){
-                case 1: ajouter();
-                        break;
-                case 2 : retirer();
-                        break;
-                case 3: rechercher();
+            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
+            switch (ch) {
+                case 1:
+                    ajouter();
                     break;
-                case 4 : modifier();
+                case 2:
+                    retirer();
                     break;
-                case 5: special();
+                case 3:
+                    rechercher();
                     break;
-                case 6 : return;
+                case 4:
+                    modifier();
+                    break;
+                case 5:
+                    special();
+                    break;
+                case 6:
+                    return;
             }
-        }while(true);
+        } while (true);
     }
+
     private void special() {
         System.out.println("numéro de ligne : ");
-        int nl =  sc.nextInt()-1;
-        sc.skip("\n");
-        if (nl >= 0) {
-            Client client = lc.get(nl);
-            client=presenter.search(client.getIdclient());
-            do {
-                System.out.println("1.commandes en cours\n2.factures non payees\n3.factures en retard\n4.factures payees\n5.produits achetés\n6.menu principal");
-                System.out.println("choix : ");
-                int ch = sc.nextInt();
-                sc.skip("\n");
-                switch (ch) {
-                    case 1:
-                        presenter.commandes(client);
-                        break;
-                    case 2:
-                        presenter.factNonPayees(client);
-                        break;
-                    case 3:
-                        presenter.factRetard(client);
-                        break;
-                    case 4:
-                        presenter.factPayees(client);
-                        break;
-                    case 5:
-                        presenter.produits(client);
-                        break;
+        int nl = choixElt(lc) - 1;
+        Client client = lc.get(nl);
+        client = presenter.search(client.getIdclient());//pour obtenir les commandes dans la liste
+        do {
+            int ch = choixListe(Arrays.asList("commandes en cours", "factures non payees", "factures en retard", "factures payees", "produits achetés", "menu principal"));
 
-                    case 6: return;
-                    default:
-                        System.out.println("choix invalide recommencez ");
-                }
-            } while (true);
+            switch (ch) {
+                case 1:
+                    presenter.commandes(client);
+                    break;
+                case 2:
+                    presenter.factNonPayees(client);
+                    break;
+                case 3:
+                    presenter.factRetard(client);
+                    break;
+                case 4:
+                    presenter.factPayees(client);
+                    break;
+                case 5:
+                    presenter.produits(client);
+                    break;
+
+                case 6:
+                    return;
+                default:
+                    System.out.println("choix invalide recommencez ");
+            }
+        } while (true);
 
 
-        }
     }
 
-    private void modifier() {
-        int nl = Utilitaire.choixElt(lc);
 
-            Client client = lc.get(nl-1);
-            String nom = modifyIfNotBlank("nom",client.getNom());
-            String prenom = modifyIfNotBlank("prénom",client.getPrenom());
-            int cp = Integer.parseInt(modifyIfNotBlank("cp",""+client.getCp()));
-            String localite = modifyIfNotBlank("localité",client.getLocalite());
-            String rue = modifyIfNotBlank("rue",client.getRue());
-            String num = modifyIfNotBlank("num",client.getNum());
-            String tel = modifyIfNotBlank("nom",client.getTel());
-            presenter.update(new Client(client.getIdclient(),nom,prenom,cp,localite,rue,num,tel));
-            lc=presenter.getAll();//rafraichissement
-            Utilitaire.affListe(lc);
+
+    private void modifier() {
+        int nl = choixElt(lc) - 1;
+
+        Client client = lc.get(nl);
+        String nom = modifyIfNotBlank("nom", client.getNom());
+        String prenom = modifyIfNotBlank("prénom", client.getPrenom());
+        int cp = Integer.parseInt(modifyIfNotBlank("cp", "" + client.getCp()));
+        String localite = modifyIfNotBlank("localité", client.getLocalite());
+        String rue = modifyIfNotBlank("rue", client.getRue());
+        String num = modifyIfNotBlank("num", client.getNum());
+        String tel = modifyIfNotBlank("nom", client.getTel());
+        presenter.update(new Client(client.getIdclient(), nom, prenom, cp, localite, rue, num, tel));
+        lc = presenter.getAll();//rafraichissement
+        affListe(lc);
 
     }
 
@@ -124,11 +130,11 @@ public class ClientViewConsole implements ClientViewInterface {
 
     private void retirer() {
 
-    int nl = Utilitaire.choixElt(lc);
-    Client client = lc.get(nl-1);
-     presenter.removeClient(client);
-     lc=presenter.getAll();//rafraichissement
-     Utilitaire.affListe(lc);
+        int nl = choixElt(lc)-1;
+        Client client = lc.get(nl);
+        presenter.removeClient(client);
+        lc = presenter.getAll();//rafraichissement
+        affListe(lc);
     }
 
     private void ajouter() {
@@ -141,27 +147,21 @@ public class ClientViewConsole implements ClientViewInterface {
         System.out.print("localité : ");
         String loc = sc.nextLine();
         System.out.print("rue: ");
-        String rue= sc.nextLine();
+        String rue = sc.nextLine();
         System.out.print("numéro: ");
-        String num= sc.nextLine();
+        String num = sc.nextLine();
         System.out.print("téléphone: ");
-        String tel= sc.nextLine();
-        presenter.addClient(new Client(0,nom,prenom,cp,loc,rue,num,tel));
-        lc=presenter.getAll();//rafraichissement
-        Utilitaire.affListe(lc);
+        String tel = sc.nextLine();
+        presenter.addClient(new Client(0, nom, prenom, cp, loc, rue, num, tel));
+        lc = presenter.getAll();//rafraichissement
+        affListe(lc);
     }
-    public String modifyIfNotBlank(String label,String oldValue){
-        System.out.println(label+" : "+oldValue);
-        System.out.print("nouvelle valeur (enter si pas de changement) : ");
-        String newValue= sc.nextLine();
-        if(newValue.isBlank()) return oldValue;
-        return newValue;
+
+      @Override
+    public Client selectionner(List<Client> lc) {
+        int nl = choixListe(lc);
+        Client client = lc.get(nl - 1);
+        return client;
     }
-    @Override
-    public Client selectionner(List<Client> lc){
-         int nl =  Utilitaire.choixListe(lc);
-         Client client = lc.get(nl-1);
-            return client;
-        }
 }
 

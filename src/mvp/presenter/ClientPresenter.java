@@ -35,8 +35,6 @@ public class ClientPresenter {
        Client cl = model.addClient(client);
        if(cl!=null) view.affMsg("création de :"+cl);
        else view.affMsg("erreur de création");
-        List<Client> clients = model.getClients();
-       // view.setListDatas(clients);//désactivé pour éviter appels imbriqués
     }
 
 
@@ -44,9 +42,7 @@ public class ClientPresenter {
         boolean ok = model.removeClient(client);
         if(ok) view.affMsg("client effacé");
         else view.affMsg("client non effacé");
-        List<Client> clients = model.getClients();
-       // view.setListDatas(clients);//désactivé pour éviter appels imbriqués
-    }
+     }
 
     public Client selectionner() {
         logger.info("appel de sélection");
