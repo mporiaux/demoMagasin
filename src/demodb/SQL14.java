@@ -13,7 +13,7 @@ public class SQL14{
         }
         System.out.println("connexion établie");
      try {
-       cs = dbConnect.prepareCall("{?=call listeclis}");
+       cs = dbConnect.prepareCall("{?=call apilisteclis}");
         cs.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
         cs.executeQuery();
        ResultSet rs=(ResultSet) cs.getObject(1);

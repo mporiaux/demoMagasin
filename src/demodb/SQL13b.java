@@ -1,23 +1,25 @@
 package demodb;
 
 
-import java.sql.*;
 import myconnections.DBConnection;
-import java.util.*;
 
- 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Scanner;
 
-public class SQL13{
 
- public SQL13(){
-     CallableStatement cs=null;
+public class SQL13b {
+
+ public SQL13b(){
+
    Connection dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
             System.exit(0);
         }
         System.out.println("connexion établie");
 
-      try {
+      try( CallableStatement  cs = dbConnect.prepareCall("call APINOUVPROD(?,?,?)")) {
           
       
        Scanner sc= new Scanner(System.in)  ;
@@ -28,8 +30,7 @@ public class SQL13{
         System.out.println("PHTVA :");
        float phtva=sc.nextFloat();
        sc.skip("\n");
-       cs = dbConnect.prepareCall(
-       "call APINOUVPROD(?,?,?)");
+
        cs.setString(1,codepro);
        cs.setString(2,descr);
        cs.setFloat(3,phtva);
@@ -40,33 +41,14 @@ public class SQL13{
  } 
     catch(Exception e) { System.out.println("Exception"+e);}
 
-   finally {
-            //finalement fermer les ressources
-          
-            try {
-                if (cs != null) {
-                    cs.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("erreur de fermeture de statement " + e);
-            }
-              try {
-                if (dbConnect != null) {
-                    dbConnect.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("erreur de fermeture de connexion " + e);
-            }
-
-      }
-
+     DBConnection.closeConnection();
   }
 
       
 
  public static void main(String[] args){
 
-  SQL13 pgm = new SQL13();     
+  SQL13b pgm = new SQL13b();
 
       
 

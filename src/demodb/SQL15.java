@@ -13,9 +13,9 @@ public class SQL15 {
         }
         System.out.println("connexion établie");
    try {
-   String query = "call TELCLI(?,?)";
+   String query = "call APITELCLI(?,?)";
 CallableStatement statement = dbConnect.prepareCall(query);
-statement.setInt(1,41);
+statement.setInt(1,1);
 statement.registerOutParameter(2, Types.VARCHAR);
 //enregistrement du paramètre de sortie en fonction de son type et de son index
 statement.execute();
