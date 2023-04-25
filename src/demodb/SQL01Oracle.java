@@ -23,7 +23,7 @@ public class SQL01Oracle {
             System.exit(0);
         }
 
-        try(
+       try(
             Statement stmt = dbConnect.createStatement();
             //représente une requête SQL
             ResultSet rs = stmt.executeQuery("select * from apiclient ");
